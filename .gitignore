@@ -1,0 +1,9 @@
+# IntelliJ Project Files #
+*.iml
+.idea
+build
+
+# Logs and Database #
+*.sqlite
+*.log
+*.db
