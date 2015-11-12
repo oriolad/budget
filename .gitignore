@@ -7,3 +7,6 @@ build
 *.sqlite
 *.log
 *.db
+
+# Gradle #
+.gradle
