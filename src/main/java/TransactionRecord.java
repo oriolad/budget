@@ -39,6 +39,15 @@ public class TransactionRecord {
         this.transactionType = transactionType;
     }
 
+    /**
+     * Constructs a new TransactionRecord give to and from Accounts, as well as the amount and type of transaction.
+     * Optional memo allows for additional comments about the TransactionRecord.
+     * @param from
+     * @param to
+     * @param amount
+     * @param transactionType
+     * @param memo
+     */
     public TransactionRecord(Account from, Account to, BigDecimal amount, Type transactionType, String memo) {
         this(from, to, amount, transactionType);
         this.memo = memo;

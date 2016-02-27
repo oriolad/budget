@@ -45,10 +45,9 @@ public class YearlyBudget {
     }
 
     public void initDB(Connection c) {
-       Statement stmt = null;
 
         try{
-            stmt = c.createStatement();
+            Statement stmt = c.createStatement();
             String sqlString = "CREATE TABLE TEST (ID INT PRIMARY KEY NOT NULL)";
             stmt.executeUpdate(sqlString);
             stmt.close();
