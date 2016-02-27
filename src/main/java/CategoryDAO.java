@@ -1,4 +1,5 @@
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.time.Period;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface CategoryDAO {
     public void insertCategory(Category category);
 
     // read
-    Category selectCategoryByName(String name);
+    Category selectCategoryByName(String name) throws DAOException;
     List<Category> selectCategoryByPeriod(Period period);
     List<Category> selectCategoryByAmount(BigDecimal amount);
     List<Category> selectCategoryByParent(Category parentCategory);

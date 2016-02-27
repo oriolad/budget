@@ -8,42 +8,42 @@ import java.util.StringTokenizer;
 
 /**
  * Maintains connection to database.
- *
+ * <p/>
  * Created by Oriola Dhamo on 2016-01-07.
  */
 
-public class CategorySqliteDAO implements CategoryDAO{
+public class CategorySqliteDAO implements CategoryDAO {
 
     private Connection connection = null;
 
-    public CategorySqliteDAO(){
+    public CategorySqliteDAO() {
         DataSource DS = DataSourceFactory.getSQLITEDataSource();
 
-        try{
+        try {
             connection = DS.getConnection();
-        }catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void runUpdate(String sql){
+    public void runUpdate(String sql) {
         try {
             Statement stmt = connection.createStatement();
             stmt.executeUpdate(sql);
             stmt.close();
-        }catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public ResultSet runQuery(String sql){
+    public ResultSet runQuery(String sql) {
 
         try {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             stmt.close();
             return rs;
-        }catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
@@ -51,7 +51,7 @@ public class CategorySqliteDAO implements CategoryDAO{
     }
 
     // create
-    public void insertCategory(Category category){
+    public void insertCategory(Category category) {
 
         String parent = category.getParent().getName();
         String name = category.getName();
@@ -68,20 +68,23 @@ public class CategorySqliteDAO implements CategoryDAO{
     }
 
     // read
-    public Category selectCategoryByName(String name){
+    public Category selectCategoryByName(String name) throws DAOException {
 
         String sql = "SELECT * FROM BUDGET_CATEGORIES WHERE CATEGORY_NAME = '%s'";
         sql = String.format(sql, name);
         ResultSet rs = runQuery(sql);
 
-
-       while(rs.next()){
-           String name = rs.getString("CATEGORY_NAME");
-           Period period = new Period.parse((CharSequence) rs.getString("CATEGORY_PERIOD"));
-       }
+        try {
+            while (rs.next()) {
+                String name = rs.getString("CATEGORY_NAME");
+                Period period = new Period.parse((CharSequence) rs.getString("CATEGORY_PERIOD"));
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
     }
 
-    public List<Category> selectCategoryByPeriod(Period period){
+    public List<Category> selectCategoryByPeriod(Period period) {
         String periodString = period.toString();
 
         String sql = "SELECT * FROM BUDGET_CATEGORIES WHERE CATEGORY_NAME = '%s'";
@@ -90,7 +93,9 @@ public class CategorySqliteDAO implements CategoryDAO{
     }
 
     public List<Category> selectCategoryByAmount(BigDecimal amount);
+
     public List<Category> selectCategoryByParent(Category parentCategory);
+
     public List<Category> selectAllCategories();
 
     // update
@@ -98,7 +103,6 @@ public class CategorySqliteDAO implements CategoryDAO{
 
     // delete
     public void deleteCategory(Category category);
-
 
 
 }
